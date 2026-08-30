@@ -29,9 +29,30 @@ Das Tool läuft **100 % lokal** über LM Studio – keine Cloud, keine Datenabfl
 | 4 | 💌 Beziehung & Ton | Brief-Form, wertschätzend, keine Fachbegriffe |
 | 5 | 🛡️ Epistemische Disziplin | Keine Halluzinationen von inneren Zuständen (Gefühle, Motive) |
 
----
+### 🖥️ Beispiel-Output
+                              Evaluierungsergebnis                              
+╔════════════════════════════════════╤═════════════╤═════════════╤═════════════╗
+║                                    │ Geschichte  │ Geschichte  │             ║
+║ Dimension                          │      A      │      B      │  Differenz  ║
+╟────────────────────────────────────┼─────────────┼─────────────┼─────────────╢
+║ 📷 Beobachtungstreue               │    9/10     │    6/10     │     -3      ║
+║  Bedeutungsgebung                │    8/10     │    7/10     │     -1      ║
+║ 🚀 Anschlussfähigkeit              │    9/10     │    6/10     │     -3      ║
+║ 💌 Beziehung & Ton                 │    9/10     │    5/10     │     -4      ║
+║ 🛡️ Epistemische Disziplin          │    9/10     │    2/10     │     -7      ║
+╟────────────────────────────────────┼─────────────┼──────────────────────────╢
+║ 🏆 GESAMTPUNKTZAHL                 │    44/50    │    26/50    │   -18 → A   ║
+╚════════════════════════════════════╧═════════════╧═════════════╧═════════════╝
 
-###🧪 Use Cases
+---
+### 💻 Usage
+Interaktiver Modus (Geschichten direkt einkopieren)
+
+python elemo_bench.py
+
+(Füge die Geschichten ein und beende die Eingabe mit ###END###)
+
+### 🧪 Use Cases
 
 Modell-Vergleich: EleMo-V2 vs. GPT-4 vs. Llama-3 bei der Generierung von Lerngeschichten.
 Fine-Tune-Evaluation: Vorher/Nachher-Vergleich nach LoRA-Training.
