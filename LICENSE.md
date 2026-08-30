@@ -151,7 +151,7 @@ For clarity:
 
 This License file is the legally binding license governing your use of this specific Software. 
 
-For a comprehensive overview of the broader EleMo project and its Dual-Licensing Model, please refer to the central EleMo Licensing & Repository Policy at: 🔗 [EleMo Licensing Hub](#) *(Link anpassen falls nötig)*
+For a comprehensive overview of the broader EleMo project and its Dual-Licensing Model, please refer to the central EleMo Licensing & Repository Policy at: 🔗 [EleMo Licensing Hub]([https://huggingface.co/spaces/Earlychildhoodeducation/License])
 
 **Important:** The central Licensing Hub is provided for informational purposes only. In the event of any conflict or discrepancy between the central Licensing Hub and this License file, the terms of this License file shall prevail for the Software distributed alongside it.
 
