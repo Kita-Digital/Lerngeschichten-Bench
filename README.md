@@ -31,15 +31,6 @@ Das Tool läuft **100 % lokal** über LM Studio – keine Cloud, keine Datenabfl
 
 ---
 
-## ⚙️ Installation & Voraussetzungen
-
-### 1. Python installieren
-Stelle sicher, dass Python 3.10+ installiert ist.
-
-### 2. Abhängigkeiten installieren
-```bash
-pip install -r requirements.txt
-
 ###🧪 Use Cases
 
 Modell-Vergleich: EleMo-V2 vs. GPT-4 vs. Llama-3 bei der Generierung von Lerngeschichten.
@@ -60,5 +51,15 @@ Für kommerzielle Nutzung (z. B. Integration in Kita-Software) kontaktiere uns �
   author = {Sebastian Götz / Kita Digital},
   year = {2026},
   url = {https://github.com/Kita-Digital/Lerngeschichten-Bench}
+
+## ⚙️ Installation & Voraussetzungen
+
+### 1. Python installieren
+Stelle sicher, dass Python 3.10+ installiert ist.
+
+### 2. Abhängigkeiten installieren
+```bash
+pip install -r requirements.txt
 }
+
 
