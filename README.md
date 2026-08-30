@@ -39,3 +39,26 @@ Stelle sicher, dass Python 3.10+ installiert ist.
 ### 2. Abhängigkeiten installieren
 ```bash
 pip install -r requirements.txt
+
+###🧪 Use Cases
+
+Modell-Vergleich: EleMo-V2 vs. GPT-4 vs. Llama-3 bei der Generierung von Lerngeschichten.
+Fine-Tune-Evaluation: Vorher/Nachher-Vergleich nach LoRA-Training.
+Prompt-Engineering: Welcher System-Prompt produziert bessere Geschichten?
+Qualitätssicherung in Kitas: Objektive Bewertung von Dokumentations-Entwürfen.
+Forschung: Standardisiertes Benchmark für pädagogische KI im deutschsprachigen Raum.
+
+
+### Lizenz
+
+Dieses Tool unterliegt der EleMo Non-Commercial License.
+Für kommerzielle Nutzung (z. B. Integration in Kita-Software) kontaktiere uns über [www.ki-insel.de].
+
+### 📚 Zitieren
+
+  title = {EleMo Lerngeschichten-Bench: A Benchmark for Evaluating Learning Stories in Early Childhood Education},
+  author = {Sebastian Götz / Kita Digital},
+  year = {2026},
+  url = {https://github.com/Kita-Digital/Lerngeschichten-Bench}
+}
+
