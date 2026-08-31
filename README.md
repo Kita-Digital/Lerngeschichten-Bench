@@ -1,96 +1,42 @@
-# 🧸 EleMo-Pedagogy-Bench-DE
+# 🧸 EleMo-Pedagogy-Bench-DE (v2)
 
-**Professionelle Evaluation von Bildungs- und Lerngeschichten nach Margaret Carr**
+**Wissenschaftliche Evaluation von Bildungs- und Lerngeschichten nach Margaret Carr**
 
-EleMo-Pedagogy-Bench-DE ist ein Open-Source-Benchmark-Tool zur objektiven, KI-gestützten Evaluation von pädagogischen Lerngeschichten (Learning Stories). Es vergleicht zwei Geschichten in 5 pädagogischen Qualitätsdimensionen und liefert ein fundiertes Vergleichsurteil.
+EleMo-Pedagogy-Bench-DE ist ein hochpräzises, Open-Source-Benchmark-Tool zur objektiven, KI-gestützten Evaluation von pädagogischen Lerngeschichten (Learning Stories). Es evaluiert Texte in 5 pädagogischen Qualitätsdimensionen und schützt durch harte Python-Validierungen vor KI-typischen Halluzinationen.
 
-Das Tool läuft **100 % lokal** über LM Studio – keine Cloud, keine Datenabflüsse.
+Das Tool läuft **100 % lokal** (z. B. über LM Studio) – keine Cloud, keine Datenabflüsse, volle DSGVO-Konformität.
 
 ---
 
-## ✨ Features
+## ✨ Neue Features in v2
 
-- **Vergleicht zwei Lerngeschichten** (z. B. EleMo vs. GPT-4, oder zwei verschiedene Prompts)
-- **Bewertet in 5 pädagogischen Dimensionen** (je 1-10 Punkte)
-- **Liefert eine Gesamtpunktzahl** (max. 50 Punkte)
-- **Gibt eine begründete Analyse**, warum Geschichte X besser ist als Y
-- **Epistemische Disziplin:** Bestraft explizit das Erfinden von Gefühlen/Gedanken (Halluzinationen)
-- **Wunderschönes Terminal-UI** durch die `rich` Bibliothek
+- **3 Ausführungsmodi:** A/B-Vergleich, Batch-Modus (JSONL für N>1) und detaillierte Einzelanalyse.
+- **Swap-and-Average (Bias-Kontrolle):** Eliminiert den LLM-Primacy-Effekt im A/B-Vergleich, indem die KI den Vergleich zweimal mit vertauschten Positionen durchführt und die Ergebnisse mittelt.
+- **Harte Zitat-Verifikation:** Jede Bewertung *muss* mit einem echten Zitat aus dem Originaltext belegt werden. Halluziniert die KI ein Zitat, wird der Versuch von Python verworfen.
+- **Striktes K.O.-Kriterium:** Fällt die *Epistemische Disziplin* (Interpretation ohne Beleg) in einem Durchlauf auf ≤ 3 Punkte, fällt die Geschichte mit dem Status "NICHT BESTANDEN" komplett durch.
+- **Logik-Zwang & Auto-Retry:** Die KI wird gezwungen, Punkte und qualitative Urteile (z. B. 9-10 = "Exzellent") logisch zu verknüpfen. Bei Fehlern wiederholt das Skript die API-Anfrage bis zu dreimal automatisch (Self-Healing).
+- **"Keine Evidenz"-Erkennung:** Fehlen Kriterien (z. B. Partizipation) situativ völlig, wird dies logisch sauber mit 1-2 Punkten und dem Zitat "Keine Evidenz" geahndet.
+- **Widescreen Terminal-UI:** Wunderschöne, bildschirmfüllende `rich`-Tabellen für perfekte Lesbarkeit.
 
 ---
 
 ## 📊 Bewertungsdimensionen
 
+Das Modell evaluiert strikt nach folgenden Kriterien (je 1–10 Punkte):
+
 | # | Dimension | Beschreibung |
 |---|-----------|--------------|
-| 1 |  Beobachtungstreue | Objektivität, Detailreichtum, "Kamera-Perspektive" |
-| 2 | 🔍 Bedeutungsgebung | Sichtbarmachung von Lerndispositionen (Margaret Carr) |
-| 3 |  Anschlussfähigkeit | Logische, kindgerechte Next Steps |
-| 4 | 💌 Beziehung & Ton | Brief-Form, wertschätzend, keine Fachbegriffe |
-| 5 | 🛡️ Epistemische Disziplin | Keine Halluzinationen von inneren Zuständen (Gefühle, Motive) |
-
-### 🖥️ Beispiel-Output
-                              Evaluierungsergebnis                              
-╔════════════════════════════════════╤═════════════╤═════════════╤═════════════╗
-║                                    │ Geschichte  │ Geschichte  │             ║
-║ Dimension                          │      A      │      B      │  Differenz  ║
-╟────────────────────────────────────┼─────────────┼─────────────┼─────────────╢
-║ 📷 Beobachtungstreue               │    9/10     │    6/10     │     -3      ║
-║  Bedeutungsgebung                │    8/10     │    7/10     │     -1      ║
-║ 🚀 Anschlussfähigkeit              │    9/10     │    6/10     │     -3      ║
-║ 💌 Beziehung & Ton                 │    9/10     │    5/10     │     -4      ║
-║ 🛡️ Epistemische Disziplin          │    9/10     │    2/10     │     -7      ║
-╟────────────────────────────────────┼─────────────┼──────────────────────────╢
-║ 🏆 GESAMTPUNKTZAHL                 │    44/50    │    26/50    │   -18 → A   ║
-╚════════════════════════════════════╧═════════════╧═════════════╧═════════════╝
+| 1 | 👁️ **Beobachtung vs. Interpretation** | Klare Trennung von dem, was faktisch passiert ist, und der pädagogischen Deutung. |
+| 2 | 🌱 **Ressourcenorientierung** | Fokus auf die Stärken, Interessen und Lerndispositionen des Kindes. Keine Defizitorientierung. |
+| 3 | 🤝 **Partizipation** | Sichtbarmachung der kindlichen Perspektive, Absichten und aktiven Mitgestaltung. |
+| 4 | 💌 **Adressatenorientierung** | Persönliche, wertschätzende Briefform an das Kind, verständliche Sprache ohne Fachjargon. |
+| 5 | 🛡️ **Epistemische Disziplin** | Verzicht auf unbegründete psychologische/kausale Zuschreibungen. Keine erfundenen Gefühle/Motive. |
 
 ---
-### 💻 Usage
-Interaktiver Modus (Geschichten direkt einkopieren)
 
-python elemo_bench.py
+## 💻 Nutzung
 
-(Füge die Geschichten ein und beende die Eingabe mit ###END###)
+Starte das Skript einfach in deinem Terminal. Es öffnet sich ein interaktives Menü:
 
-### 🧪 Use Cases
-
-Modell-Vergleich: EleMo-V2 vs. GPT-4 vs. Llama-3 bei der Generierung von Lerngeschichten.
-Fine-Tune-Evaluation: Vorher/Nachher-Vergleich nach LoRA-Training.
-Prompt-Engineering: Welcher System-Prompt produziert bessere Geschichten?
-Qualitätssicherung in Kitas: Objektive Bewertung von Dokumentations-Entwürfen.
-Forschung: Standardisiertes Benchmark für pädagogische KI im deutschsprachigen Raum.
-
-## 🔬 Methodische Validierung & Roadmap (V2)
-
-Dieses Tool ist ein **LLM-basierter Bewertungsassistent**, der durch strikte Schema-Validierung und deterministische Python-Berechnungen (keine LLM-Halluzinationen bei Summen/Gewinnern) maximale Konsistenz bietet. 
-
-Um die wissenschaftliche Validität weiter zu erhöhen, ist für die nächste Version (V2) eine **Human-in-the-Loop-Validierung** geplant:
-1. **Expert*innen-Rating:** Unabhängige pädagogische Fachkräfte bewerten denselben Datensatz manuell nach der identischen Rubrik.
-2. **Statistische Absicherung:** Berechnung der **Spearman-Korrelation** (Übereinstimmung der Rangfolgen zwischen Mensch und KI) und **Krippendorff's Alpha** (Interrater-Reliabilität über mehrere Bewerter hinweg).
-3. **Ziel:** Nachweis, dass der LLM-Judge in >80% der Fälle mit dem menschlichen Expertenkonsens übereinstimmt.
-
-Wir laden die pädagogische und KI-Forschungscommunity ausdrücklich ein, sich an dieser Validierungsphase zu beteiligen.
-
-### Lizenz
-
-Dieses Tool unterliegt der EleMo Non-Commercial License.
-Für kommerzielle Nutzung (z. B. Integration in Kita-Software) kontaktiere uns über [www.ki-insel.de].
-
-### 📚 Zitieren
-
-  title = {EleMo Lerngeschichten-Bench: A Benchmark for Evaluating Learning Stories in Early Childhood Education},
-  author = {Sebastian Götz / Kita Digital},
-  year = {2026},
-  url = {https://github.com/Kita-Digital/Lerngeschichten-Bench}
-
-## ⚙️ Installation & Voraussetzungen
-
-### 1. Python installieren
-Stelle sicher, dass Python 3.10+ installiert ist.
-
-### 2. Abhängigkeiten installieren
 ```bash
-pip install -r requirements.txt
-}
-
-
+python elemo_bench.py
