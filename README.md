@@ -60,6 +60,16 @@ Prompt-Engineering: Welcher System-Prompt produziert bessere Geschichten?
 Qualitätssicherung in Kitas: Objektive Bewertung von Dokumentations-Entwürfen.
 Forschung: Standardisiertes Benchmark für pädagogische KI im deutschsprachigen Raum.
 
+## 🔬 Methodische Validierung & Roadmap (V2)
+
+Dieses Tool ist ein **LLM-basierter Bewertungsassistent**, der durch strikte Schema-Validierung und deterministische Python-Berechnungen (keine LLM-Halluzinationen bei Summen/Gewinnern) maximale Konsistenz bietet. 
+
+Um die wissenschaftliche Validität weiter zu erhöhen, ist für die nächste Version (V2) eine **Human-in-the-Loop-Validierung** geplant:
+1. **Expert*innen-Rating:** Unabhängige pädagogische Fachkräfte bewerten denselben Datensatz manuell nach der identischen Rubrik.
+2. **Statistische Absicherung:** Berechnung der **Spearman-Korrelation** (Übereinstimmung der Rangfolgen zwischen Mensch und KI) und **Krippendorff's Alpha** (Interrater-Reliabilität über mehrere Bewerter hinweg).
+3. **Ziel:** Nachweis, dass der LLM-Judge in >80% der Fälle mit dem menschlichen Expertenkonsens übereinstimmt.
+
+Wir laden die pädagogische und KI-Forschungscommunity ausdrücklich ein, sich an dieser Validierungsphase zu beteiligen.
 
 ### Lizenz
 
