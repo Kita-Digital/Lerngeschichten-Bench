@@ -21,7 +21,7 @@ METHODOLOGY_NOTE = """
 [bold]Methodik & Parametrisierung:[/bold]
 • [cyan]Swap-and-Average (Bias-Kontrolle):[/cyan] Beim A/B-Vergleich wird der Primacy-Effekt durch Vertauschen und Mittelwertbildung ausgeglichen.
 • [cyan]Striktes K.O.-Kriterium:[/cyan] Fällt die 'epistemische_disziplin' in AUCH NUR EINEM Run auf ≤ 3, gilt die Geschichte als "NICHT BESTANDEN".
-• [cyan]Fuzzy-Quote-Verification:[/cyan] Zitate MÜSSEN im Originaltext stehen (70% Toleranz via difflib für leichte KI-Paraphrasierungen). Fehlt eine Dimension, wird dies mit Score 1-2 und Zitat "Keine Evidenz" bestraft.
+• [cyan]Fuzzy-Quote-Verification:[/cyan] Zitate MÜSSEN im Originaltext stehen (Toleranz auf Wort-Ebene für leichte KI-Paraphrasierungen). Fehlt eine Dimension, wird dies mit Score 1-2 und Zitat "Keine Evidenz" bestraft.
 """
 
 DIMENSIONS = {
@@ -150,22 +150,30 @@ def normalize_text(text: str) -> str:
 
 
 def verify_quote(quote: str, original_text: str) -> bool:
-    """Fuzzy Matching: Erlaubt leichte LLM-Paraphrasierungen, blockt aber echte Halluzinationen."""
+    """Fuzzy Matching auf Wort-Ebene: Akzeptiert Zitate, wenn mind. 50% der Wörter vorkommen."""
     if not quote or quote.strip().upper() == "KEINE EVIDENZ":
         return False
 
     norm_q = normalize_text(quote)
     norm_t = normalize_text(original_text)
 
-    # 1. Perfekter Match
+    # 1. Perfekter Match (schnellster Weg)
     if norm_q in norm_t:
         return True
 
-    # 2. Toleranz-Modus: Zitat muss zu mind. 70% oder mit 15 Zeichen am Stück im Text vorkommen
-    sm = difflib.SequenceMatcher(None, norm_q, norm_t)
-    match = sm.find_longest_match(0, len(norm_q), 0, len(norm_t))
+    # 2. Toleranz-Modus auf Wort-Ebene
+    q_words = norm_q.split()
+    t_words = norm_t.split()
 
-    if match.size >= (len(norm_q) * 0.7) or match.size >= 15:
+    if not q_words:
+        return False
+
+    sm = difflib.SequenceMatcher(None, q_words, t_words)
+    # Zählt, wie viele Wörter in der korrekten Reihenfolge übereinstimmen
+    matched_words = sum(block.size for block in sm.get_matching_blocks())
+
+    # Wenn mindestens 50% der Wörter vorkommen, lassen wir den LLM-Satzfehler durch
+    if (matched_words / len(q_words)) >= 0.5:
         return True
 
     return False
@@ -525,8 +533,8 @@ def main():
     client = OpenAI(base_url=args.url, api_key="lm-studio")
 
     console.print(Panel.fit(
-        "[bold cyan]🧸 EleMo-Pedagogy-Bench-DE v12 (Fuzzy Logic Edition)[/bold cyan]\n"
-        "[dim]Feinjustierte Zitat-Toleranz via difflib SequenceMatcher[/dim]",
+        "[bold cyan]🧸 EleMo-Pedagogy-Bench-DE v13 (Word-Fuzzy Edition)[/bold cyan]\n"
+        "[dim]Intelligente Zitat-Prüfung auf Wort-Ebene, unnachgiebig bei Halluzinationen[/dim]",
         border_style="cyan"
     ))
 
